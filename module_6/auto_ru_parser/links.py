@@ -29,7 +29,7 @@ def getLinks():
     number_of_pages = getPagesCount()
     all_ads = []
 
-    for i in range(0, number_of_pages): # Number of pages you want to parse
+    for i in range(1, number_of_pages): # Number of pages you want to parse
         print('Page in progress:', i, 'Total Pages:', number_of_pages)
         url_with_list_of_ads = base_url + str(i)
 
@@ -40,7 +40,7 @@ def getLinks():
         cars_from_page = page_list_ads.find_all('a', class_='Link ListingItemTitle__link')
         cars_from_page_list = [elem.get('href') for elem in cars_from_page]
 
-        with open('/drive/My Drive/all_ads_9.csv', 'a') as myfile:
+        with open('/drive/My Drive/all_ads.csv', 'a') as myfile:
             wr = csv.writer(myfile)
             for elem in cars_from_page_list:
                 wr.writerow([elem])
