@@ -11,7 +11,13 @@ drive.mount('/drive')
 
 def getPagesCount():
     first_page = 'https://auto.ru/cars/all/?damage_group=ANY&customs_state_group=DOESNT_MATTER&has_image=false&currency=RUR&output_type=list&page_num_offers=1'
-    response_list_ads = requests.get(first_page)
+    headers = {
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36'
+    }
+    response_list_ads = requests.get(first_page, headers=headers)
     response_list_ads.encoding = 'utf-8'
 
     page_list_ads = BeautifulSoup(response_list_ads.text, 'html.parser')
@@ -32,8 +38,14 @@ def getLinks():
     for i in range(1, number_of_pages): # Number of pages you want to parse
         print('Page in progress:', i, 'Total Pages:', number_of_pages)
         url_with_list_of_ads = base_url + str(i)
+        headers = {
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36'
+        }
 
-        response_list_ads = requests.get(url_with_list_of_ads)
+        response_list_ads = requests.get(url_with_list_of_ads, headers=headers)
         response_list_ads.encoding = 'utf-8'
 
         page_list_ads = BeautifulSoup(response_list_ads.text, 'html.parser')
