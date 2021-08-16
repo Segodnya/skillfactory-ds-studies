@@ -4,6 +4,7 @@ import csv
 import time
 import json
 import re
+from multiprocessing import Process
 import pandas as pd
 
 from google.colab import drive
@@ -60,4 +61,6 @@ def getLinks():
 
     return all_ads
 
-all_ads = getLinks()
+process = Process(target=getLinks())
+process.start()
+process.join()
