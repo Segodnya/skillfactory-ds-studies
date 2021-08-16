@@ -4,6 +4,7 @@ import time
 import json
 import re
 import pandas as pd
+from multiprocessing import Process
 from google.colab import drive
 drive.mount('/drive')
 
@@ -155,14 +156,20 @@ all_ads = df_ads[0].tolist()
 
 car_dict = {}
 
-steps = 0
-for ad in all_ads:
-    add_ad_to_car_dict(ad)
-    steps += 1
-    if steps % 10 == 0:
-        print(f'Completed {steps} of total {len(all_ads)}') 
-    else:
-        continue
+def makeDatasetFile(start, end):
+    steps = 0
+    for ad in all_ads[start:end]:
+        add_ad_to_car_dict(ad)
+        steps += 1
+        if steps % 10 == 0:
+            print(f'Completed {steps} of total {end-start}') 
+        else:
+            continue
 
-df = pd.DataFrame.from_dict(car_dict, orient='index')
-df.to_csv('/drive/My Drive/autoru_result.csv')
+    df = pd.DataFrame.from_dict(car_dict, orient='index')
+    df.to_csv(f'/drive/My Drive/autoru_result_{file_number}.csv')
+
+
+process = Process(target=makeDatasetFile(0, 300000))
+process.start()
+process.join()
