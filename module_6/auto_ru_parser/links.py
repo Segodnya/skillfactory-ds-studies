@@ -11,7 +11,7 @@ from google.colab import drive
 drive.mount('/drive')
 
 def getPagesCount():
-    first_page = 'https://auto.ru/cars/all/?damage_group=ANY&customs_state_group=DOESNT_MATTER&has_image=false&currency=RUR&output_type=list&page_num_offers=1'
+    first_page = 'https://auto.ru/cars/used/?output_type=list&page_num_offers=1'
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
         'Accept-Encoding': 'gzip, deflate, br',
@@ -32,7 +32,7 @@ def getPagesCount():
 
 def getLinks():
     # collect all links from range of pages
-    base_url = 'https://auto.ru/cars/all/?damage_group=ANY&customs_state_group=DOESNT_MATTER&has_image=false&currency=RUR&output_type=list&page_num_offers='
+    base_url = 'https://auto.ru/cars/used/?output_type=list&page_num_offers='
     number_of_pages = getPagesCount()
     all_ads = []
 
