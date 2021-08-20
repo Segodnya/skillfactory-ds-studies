@@ -13,12 +13,14 @@ drive.mount('/drive')
 def getPagesCount():
     first_page = 'https://auto.ru/cars/used/?output_type=list&page_num_offers=1'
     headers = {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36'
+        'Accept-Language': 'en-US,en;q=0.5',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101 Firefox/78.0'
     }
-    response_list_ads = requests.get(first_page, headers=headers)
+
+    cookies = {'autoru_gdpr': '1'}
+    response_list_ads = requests.get(first_page, headers=headers, cookies=cookies)
     response_list_ads.encoding = 'utf-8'
 
     page_list_ads = BeautifulSoup(response_list_ads.text, 'html.parser')
@@ -40,13 +42,15 @@ def getLinks():
         print('Page in progress:', i, 'Total Pages:', number_of_pages)
         url_with_list_of_ads = base_url + str(i)
         headers = {
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36'
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101 Firefox/78.0'
         }
 
-        response_list_ads = requests.get(url_with_list_of_ads, headers=headers)
+        cookies = {'autoru_gdpr': '1'}
+
+        response_list_ads = requests.get(url_with_list_of_ads, headers=headers, cookies=cookies)
         response_list_ads.encoding = 'utf-8'
 
         page_list_ads = BeautifulSoup(response_list_ads.text, 'html.parser')
