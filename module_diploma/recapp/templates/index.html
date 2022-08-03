@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Submit a prediction for user with its visitorid {% endblock %}</h1>
+    <form method="POST" action="{{ url_for('predict') }}">
+        <input type="text" name="visitorid"/>
+        <input type="submit" name="action" value="Predict"/>
+    </form>
+{% endblock %}
