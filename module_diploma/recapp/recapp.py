@@ -4,9 +4,16 @@
 from flask import Flask, render_template, request
 import pandas as pd
 import numpy as np
+from zipfile import ZipFile
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'df0331cefc6c2b9a5d0208a726a5d1c0fd37324feba25506'
+
+# Create a ZipFile Object and load sample.zip in it
+with ZipFile('visitors.zip', 'r') as zipObj:
+    # Extract all the contents of zip file in current directory
+    zipObj.extractall()
 visitors = pd.read_csv('visitors.csv')
 
 
