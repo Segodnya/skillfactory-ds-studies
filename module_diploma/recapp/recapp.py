@@ -5,13 +5,16 @@ from flask import Flask, render_template, request
 import pandas as pd
 import numpy as np
 from zipfile import ZipFile
+import os
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'df0331cefc6c2b9a5d0208a726a5d1c0fd37324feba25506'
+# Get the current working directory
+cwd = os.getcwd()
 
 # Create a ZipFile Object and load sample.zip in it
-with ZipFile('visitors.zip', 'r') as zipObj:
+with ZipFile(cwd+'/visitors.zip', 'r') as zipObj:
     # Extract all the contents of zip file in current directory
     zipObj.extractall()
 visitors = pd.read_csv('visitors.csv')
@@ -74,3 +77,6 @@ def predict():
                 first, second, third = items_list[0], items_list[1], items_list[2]
                 return '<h1>{}, {}, {}</h1>'.format(first, second, third)
         
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=4455)
